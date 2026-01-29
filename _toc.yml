@@ -2,8 +2,6 @@ format: jb-book
 root: book/landing.md
 
 parts:
-- caption: "Introduction to Image Analysis"
-  chapters:
 - caption: Course Information
   chapters:
   - file: book/schedule.md
@@ -17,15 +15,11 @@ parts:
   - file: book/image_analysis_intro.md
   - file: book/notebooks.md
     sections:
-    - file: book/materials/image_handling/landing.md
+    - file: materials/image_handling/landing.md
       sections:
-      - file: notebooks/example_notebook.ipynb
-    - file: book/materials/image_processing/landing.md
-      sections:
-      - file: notebooks/example_notebook.ipynb
-    - file: book/materials/image_analysis/landing.md
-      sections:
-      - file: notebooks/example_notebook.ipynb
+      - file: materials/example_notebook.ipynb
+    - file: materials/image_processing/landing.md
+    - file: materials/image_analysis/landing.md
 
 - caption: Further Info
   chapters:
