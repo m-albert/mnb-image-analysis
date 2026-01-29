@@ -1,0 +1,50 @@
+# This workflows will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: Test Notebooks
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.platform }} py${{ matrix.python-version }}
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          environment-file: materials/environment.yml
+          miniforge-version: latest
+          auto-activate-base: false
+          activate-environment: mnb-image-analysis
+
+      - name: Install testing dependencies
+        shell: bash -l {0}
+        run: |
+          conda activate mnb-image-analysis
+          pip install pytest nbmake
+
+      - name: Test notebooks
+        shell: bash -l {0}
+        run: |
+          conda activate mnb-image-analysis
+          while IFS= read -r notebook; do
+            if [ ! -z "$notebook" ] && [ ! "${notebook:0:1}" = "#" ]; then
+              echo "Testing $notebook"
+              pytest --nbmake "$notebook" -v
+            fi
+          done < testing/notebooks_to_test.txt
