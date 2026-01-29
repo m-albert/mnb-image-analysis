@@ -1,4 +1,4 @@
-name: image-analysis-mnb
+name: mnb-image-analysis
 channels:
   - conda-forge
 dependencies:
