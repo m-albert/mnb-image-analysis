@@ -6,7 +6,7 @@ parts:
   chapters:
 - caption: Course Information
   chapters:
-  - file: book/content.md
+  - file: book/schedule.md
   - file: book/setup/computer_setup.md
     sections:
     - file: book/setup/download_example_data.md

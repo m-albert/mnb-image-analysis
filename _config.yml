@@ -2,7 +2,7 @@
 title: "Introduction to (Bio-)Image Analysis with Python"
 author: Microscopy Network Basel
 copyright: "2026 Microscopy Network Basel"
-logo: '.logo.svg'
+logo: './book/logo.jpeg'
 execute:
   execute_notebooks: "off"
 parse:

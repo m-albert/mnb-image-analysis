@@ -27,7 +27,7 @@ jobs:
       - name: Build Jupyter Book
         run: |
           jupyter-book clean .
-          jupyter-book build --config book-config.yml --toc book-toc.yml --all
+          jupyter-book build . --all
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
