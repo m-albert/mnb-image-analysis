@@ -22,3 +22,7 @@ jupyter-book build . --all
 ```
 
 The built book will be available in the `_build/html` folder. You can open the `index.html` file in your web browser to view it locally.
+
+## Notebook testing
+
+The repo includes a GitHub Actions workflow to automatically verify that the Jupyter notebooks listed in `testing/notebooks_to_test.txt` run through in combination with the `materials/environment.yml` conda environment. This as well as the computer setup instructions can be replaced by pixi based workflows.
