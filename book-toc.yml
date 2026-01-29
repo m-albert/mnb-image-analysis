@@ -1,0 +1,33 @@
+format: jb-book
+root: book/landing.md
+
+parts:
+- caption: "Introduction to Image Analysis"
+  chapters:
+- caption: Course Information
+  chapters:
+  - file: book/content.md
+  - file: book/setup/computer_setup.md
+    sections:
+    - file: book/setup/download_example_data.md
+    - file: book/setup/install_python.md
+    - file: book/setup/setup_environment.md
+- caption: Course Materials
+  chapters:
+  - file: book/image_analysis_intro.md
+  - file: book/notebooks.md
+    sections:
+    - file: book/materials/image_handling/landing.md
+      sections:
+      - file: notebooks/example_notebook.ipynb
+    - file: book/materials/image_processing/landing.md
+      sections:
+      - file: notebooks/example_notebook.ipynb
+    - file: book/materials/image_analysis/landing.md
+      sections:
+      - file: notebooks/example_notebook.ipynb
+
+- caption: Further Info
+  chapters:
+  - file: book/acknowledgements.md
+  - file: book/further_reading.md

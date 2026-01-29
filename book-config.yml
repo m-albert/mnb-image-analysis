@@ -1,0 +1,31 @@
+# Book settings
+title: "Introduction to (Bio-)Image Analysis with Python"
+author: Microscopy Network Basel
+copyright: "2026 Microscopy Network Basel"
+logo: '.logo.svg'
+execute:
+  execute_notebooks: "off"
+parse:
+  myst_enable_extensions:
+    # don't forget to list any other extensions you want enabled,
+    # including those that are enabled by default! See here: https://jupyterbook.org/en/stable/customize/config.html
+    - html_image
+    - dollarmath   # needed for $...$ and $$...$$
+    - amsmath      # needed for \begin{equation}...\end{equation}
+
+sphinx:
+  recursive_update: true  # merge instead of overwriting defaults
+  config:
+    # html_theme_options:
+    #   collapse_navigation: False
+    #   navigation_depth: 4
+    html_theme_options:
+      show_toc_level: 2
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    mathjax3_config:
+      tex:
+        inlineMath: [["$", "$"], ["\\(", "\\)"]]
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]]
+        macros:
+          RR: "\\mathbb{R}"
+          bold: ["{\\bf #1}", 1]
