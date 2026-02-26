@@ -1,5 +1,8 @@
 # Installing Python
 
+Content to follow soon.
+
+<!--
 ## Overview
 
 To run the Python jupyter notebooks used in this course, you need to install Python locally on your computer.
@@ -107,3 +110,4 @@ Select the installation instructions for your operating system and processor fro
 4. Once the installation has completed, you can verify it was correctly installed by searching for the "Miniforge Prompt" in your Start menu.
 ```
 ````
+-->

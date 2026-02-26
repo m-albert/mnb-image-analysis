@@ -1,5 +1,9 @@
 # Setting up a python environment
 
+Content to follow soon.
+
+<!--
+
 Running the notebooks in this course requires a python environment with the necessary packages installed. This section explains how to set up the right environment using `conda` and the `environment.yml` file provided with this course.
 
 ## Setting up your conda environment
@@ -31,3 +35,5 @@ Here we're assuming you have already installed Miniforge and have opened a termi
 	```
 
 Jupyter Notebook will open in a browser window. If this worked, you can close the browser window again and stop the notebook server by going back to your terminal and pressing `CTRL-C` twice. Possibly, you will be asked to confirm that you want to shut down the server by entering `y` and pressing `ENTER`.
+
+-->
