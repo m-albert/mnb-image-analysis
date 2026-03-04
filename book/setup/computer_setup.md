@@ -2,6 +2,9 @@
 
 Content to follow soon.
 
+This section explains how to set up your computer:
+1. Create a Python environment with pixi
+
 <!--
 
 This section explains how to set up your computer:

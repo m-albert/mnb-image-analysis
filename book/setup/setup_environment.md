@@ -1,6 +1,47 @@
 # Setting up a python environment
 
-Content to follow soon.
+## Pixi installation
+
+# Trash that it looks horrible --> do it more like Marvin on install_python.md
+
+We will be using `pixi` as Pyhton environment manager. The official installation instructions can be found [here](https://pixi.prefix.dev/latest/installation/).
+
+To install `pixi` you can run the following command in your terminal:
+
+=== "Linux & macOS"
+    ```bash
+    curl -fsSL https://pixi.sh/install.sh | sh
+    ```
+
+    If your system doesn't have `curl`, you can use `wget`:
+
+    ```bash
+    wget -qO- https://pixi.sh/install.sh | sh
+    ```
+
+    ??? note "What does this do?"
+        The above invocation will automatically download the latest version of `pixi`, extract it, and move the `pixi` binary to `~/.pixi/bin`.
+        The script will also extend the `PATH` environment variable in the startup script of your shell to include `~/.pixi/bin`.
+        This allows you to invoke `pixi` from anywhere.
+
+=== "Windows"
+    [Download installer](https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-pc-windows-msvc.msi){ .md-button }
+
+    Or run:
+
+    ```powershell
+    powershell -ExecutionPolicy Bypass -c "irm -useb https://pixi.sh/install.ps1 | iex"
+    ```
+
+    ??? note "What does this do?"
+        The above invocation will automatically download the latest version of `pixi`, extract it, and move the `pixi` binary to `%UserProfile%\.pixi\bin`.
+        The command will also add `%UserProfile%\.pixi\bin` to your `PATH` environment variable, allowing you to invoke `pixi` from anywhere.
+
+Now restart your terminal or shell to make the installation take effect.
+
+## Environment creation
+
+
 
 <!--
 
