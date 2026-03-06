@@ -6426,7 +6426,7 @@ packages:
 - pypi: ./
   name: mnb-image-analysis
   version: 0.1.0
-  sha256: dd64edccef2464e8042d1562971e7252349a72a0e1a7a4120fc706b698f3fe39
+  sha256: b1db8dd5b1adf8988fc29224d06a3759d965b98cb799a8cd09d9a6087d391513
   requires_python: '>=3.11'
 - conda: https://conda.anaconda.org/conda-forge/noarch/munkres-1.1.4-pyhd8ed1ab_1.conda
   sha256: d09c47c2cf456de5c09fa66d2c3c5035aa1fa228a1983a433c47b876aa16ce90
