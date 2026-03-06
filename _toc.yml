@@ -7,9 +7,9 @@ parts:
   - file: book/schedule.md
   - file: book/setup/computer_setup.md
     sections:
-    - file: book/setup/download_example_data.md
     - file: book/setup/install_python.md
     - file: book/setup/setup_environment.md
+    - file: book/setup/download_example_data.md
 - caption: Course Materials
   chapters:
   - file: book/image_analysis_intro.md
