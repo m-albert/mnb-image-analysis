@@ -6,6 +6,13 @@
     ```
 2. Run the following command to download the example data:
     ```bash
-    pixi run download data
+    pixi run download_data
     ```
-3. Make sure to extract the contents of the zip file.
+
+```{note}
+Alternatively, you can downlaod from [here]() -- missing link --.
+
+Make sure to extract the zip file's content and move it to the repository folder.
+```
+
+

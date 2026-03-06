@@ -17,6 +17,21 @@ platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
 mnb_image_analysis = { path = ".", editable = true }
 
 [tool.pixi.tasks]
+#    To download a switch drive folder containing multiple files (instead of single zip)
+# 1. Create a folder on switch drive
+# 2. share the folder as a "Public links" for download
+# 3. copy the link and add '/download' at the end
+# This will download and extract to './example_data/**name of the switch drive folder**'
+# FIXME/TODO: change the download path (currently folder with ipynb files from last year)
+download_data = "curl -L -o example_data.zip https://drive.switch.ch/index.php/s/IuieJq4Nz0FUmNn/download"
+
+# Below the same comannt but with unzip, but unzip does not exist for windows. 
+# Pyhton script required for crossplatform functionality.
+#download_data = """
+#mkdir -p example_data &&
+#[ -f example_data.zip ] || curl -L -o example_data.zip https://drive.switch.ch/index.php/s/IuieJq4Nz0FUmNn/download &&
+#unzip -o example_data.zip -d example_data/
+#"""
 
 [tool.pixi.dependencies]
 numpy = ">=2.4.2,<3"
@@ -31,3 +46,5 @@ jupyterlab = ">=4.5.5,<5"
 python = "3.11.*"
 stackview = ">=0.19.1,<0.20"
 ipympl = ">=0.10.0,<0.11"
+curl = "*"
+# unzip = "*" # not available on Windows...

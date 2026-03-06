@@ -19,7 +19,7 @@
         ```
         And deactivate the environment with:
         ```bash
-        pixi exit
+        exit
         ````
     ````
 
