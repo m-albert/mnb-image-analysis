@@ -1,5 +1,11 @@
 [project]
-authors = [{name = "Laurent Guerard", email = "laurent.guerard@unibas.ch"}]
+authors = [
+    { name = "Laurent Guerard", email = "laurent.guerard@unibas.ch" },
+    { name = "Marvin Albert", email = "marvin.albert@bsse.ethz.ch" },
+    { name = "Niklas Khoss", email = "niklas.khoss@fmi.ch" },
+    { name = "Rao Rohan Girish", email = "r.rohangirish@unibas.ch" },
+    { name = "Loïc Sauteur", email = "loic.sauteur@unibas.ch" },
+]
 dependencies = []
 name = "mnb-image-analysis"
 requires-python = ">= 3.11"
