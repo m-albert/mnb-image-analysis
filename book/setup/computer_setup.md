@@ -1,6 +1,9 @@
 # Computer setup
 
-Content to follow soon.
+This section explains how to set up your computer:
+1. Install `pixi` (Python envrionment manager).
+2. Create a Python environment using `pixi`.
+3. Download the example data.
 
 <!--
 
