@@ -11,4 +11,10 @@ dependencies:
   - seaborn
   - pandas
   - ipympl
+  - ipywidgets
   - tqdm
+  - tifffile
+  - pooch # For downloading cells3d dataset. Remove when we only use blobs
+  - pip:
+    - bioio
+    - bioio-tifffile
