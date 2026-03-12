@@ -14,7 +14,7 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
 
 [tool.pixi.pypi-dependencies]
-mnb_image_analysis = { path = ".", editable = true }
+# mnb_image_analysis = { path = ".", editable = true }
 
 [tool.pixi.tasks]
 #    To download a switch drive folder containing multiple files (instead of single zip)
@@ -23,9 +23,9 @@ mnb_image_analysis = { path = ".", editable = true }
 # 3. copy the link and add '/download' at the end
 # This will download and extract to './example_data/**name of the switch drive folder**'
 # FIXME/TODO: change the download path (currently folder with ipynb files from last year)
-download_data = "curl -L -o example_data.zip https://drive.switch.ch/index.php/s/IuieJq4Nz0FUmNn/download"
+# download_data = "curl -L -o example_data.zip https://drive.switch.ch/index.php/s/IuieJq4Nz0FUmNn/download"
 
-# Below the same comannt but with unzip, but unzip does not exist for windows. 
+# Below the same comannt but with unzip, but unzip does not exist for windows.
 # Pyhton script required for crossplatform functionality.
 #download_data = """
 #mkdir -p example_data &&
