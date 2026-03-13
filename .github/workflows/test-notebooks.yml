@@ -37,5 +37,4 @@ jobs:
 
       - name: Test notebooks
         run: |
-          pixi run --environment test pytest --nbmake materials/**/*.ipynb -v --tb=short --continue-on-collection-errors
-        continue-on-error: false
+          pixi run --environment test pytest --nbmake materials/ -v --tb=short --continue-on-collection-errors
