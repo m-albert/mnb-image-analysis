@@ -54,3 +54,10 @@ stackview = ">=0.19.1,<0.20"
 ipympl = ">=0.10.0,<0.11"
 curl = "*"
 # unzip = "*" # not available on Windows...
+
+[tool.pixi.feature.test.dependencies]
+pytest = ">=9.0.0,<10"
+nbmake = ">=1.5.0,<2"
+
+[tool.pixi.environments]
+test = ["test"]

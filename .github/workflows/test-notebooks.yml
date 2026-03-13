@@ -33,12 +33,9 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: pixi install
-
-      - name: Install testing dependencies
-        run: pixi run pip install pytest nbmake
+        run: pixi install --environment test
 
       - name: Test notebooks
         run: |
-          pixi run pytest --nbmake materials/**/*.ipynb -v --tb=short --continue-on-collection-errors
+          pixi run --environment test pytest --nbmake materials/**/*.ipynb -v --tb=short --continue-on-collection-errors
         continue-on-error: false
