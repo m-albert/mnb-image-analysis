@@ -37,4 +37,4 @@ jobs:
 
       - name: Test notebooks
         run: |
-          pixi run --environment test pytest --nbmake materials/ -v --tb=short --continue-on-collection-errors
+          pixi run --environment test pytest --nbmake materials/ --nbmake-timeout=150 -v --tb=short --continue-on-collection-errors
