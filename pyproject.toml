@@ -55,4 +55,5 @@ ipympl = ">=0.10.0,<0.11"
 curl = "*"
 napari = ">=0.6.6,<0.7"
 pooch = ">=1.9.0,<2"
+seaborn = ">=0.13.2,<0.14"
 # unzip = "*" # not available on Windows...
