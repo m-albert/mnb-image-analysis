@@ -21,7 +21,7 @@ parts:
     sections:
     - file: materials/image_processing/landing.md
       sections:
-      - file: book/image_processing.ipynb
+      - file: book/image_processing_book.ipynb
     - file: materials/image_analysis/landing.md
 
 - caption: Further Info
