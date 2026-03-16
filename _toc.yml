@@ -18,7 +18,10 @@ parts:
     - file: materials/image_handling/landing.md
       sections:
       - file: materials/image_handling/image_handling
+    sections:
     - file: materials/image_processing/landing.md
+      sections:
+      - file: book/image_processing.ipynb
     - file: materials/image_analysis/landing.md
 
 - caption: Further Info
