@@ -18,7 +18,6 @@ parts:
     - file: materials/image_handling/landing.md
       sections:
       - file: materials/image_handling/image_handling
-      - file: materials/example_notebook.ipynb
     - file: materials/image_processing/landing.md
     - file: materials/image_analysis/landing.md
 
