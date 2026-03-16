@@ -23,6 +23,8 @@ parts:
       sections:
       - file: book/image_processing_book.ipynb
     - file: materials/image_analysis/landing.md
+      sections:
+      - file: book/feature_extraction.ipynb
 
 - caption: Further Info
   chapters:

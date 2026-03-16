@@ -6,7 +6,7 @@ authors = [
     { name = "Rao Rohan Girish", email = "r.rohangirish@unibas.ch" },
     { name = "Loïc Sauteur", email = "loic.sauteur@unibas.ch" },
 ]
-dependencies = []
+dependencies = ["cellpose<4"]
 name = "mnb-image-analysis"
 requires-python = ">= 3.11"
 version = "0.1.0"
@@ -53,8 +53,10 @@ python = "3.11.*"
 stackview = ">=0.19.1,<0.20"
 ipympl = ">=0.10.0,<0.11"
 curl = "*"
-bioio-tifffile = ">=1.3.0,<2"
+napari = ">=0.6.6,<0.7"
 pooch = ">=1.9.0,<2"
+seaborn = ">=0.13.2,<0.14"
+bioio-tifffile = ">=1.3.0,<2"
 # unzip = "*" # not available on Windows...
 
 [tool.pixi.feature.test.dependencies]
