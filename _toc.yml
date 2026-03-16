@@ -24,5 +24,6 @@ parts:
 
 - caption: Further Info
   chapters:
+  - file: book/feedback.md
   - file: book/acknowledgements.md
   - file: book/further_reading.md
