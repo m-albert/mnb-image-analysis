@@ -18,13 +18,16 @@ parts:
     - file: materials/image_handling/landing.md
       sections:
       - file: materials/image_handling/image_handling
-      - file: materials/example_notebook.ipynb
+    sections:
     - file: materials/image_processing/landing.md
+      sections:
+      - file: book/image_processing_book.ipynb
     - file: materials/image_analysis/landing.md
       sections:
       - file: book/feature_extraction.ipynb
 
 - caption: Further Info
   chapters:
+  - file: book/feedback.md
   - file: book/acknowledgements.md
   - file: book/further_reading.md
