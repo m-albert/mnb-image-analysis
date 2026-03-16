@@ -15,16 +15,9 @@ parts:
   - file: book/image_analysis_intro.md
   - file: book/notebooks.md
     sections:
-    - file: materials/image_handling/landing.md
-      sections:
-      - file: materials/image_handling/image_handling
-    sections:
-    - file: materials/image_processing/landing.md
-      sections:
-      - file: book/image_processing_book.ipynb
-    - file: materials/image_analysis/landing.md
-      sections:
-      - file: book/feature_extraction.ipynb
+    - file: materials/image_handling/image_handling.ipynb
+    - file: book/image_processing_book.ipynb
+    - file: book/feature_extraction.ipynb
 
 - caption: Further Info
   chapters:
