@@ -6,7 +6,6 @@ authors = [
     { name = "Rao Rohan Girish", email = "r.rohangirish@unibas.ch" },
     { name = "Loïc Sauteur", email = "loic.sauteur@unibas.ch" },
 ]
-#dependencies = ["cellpose<4"]
 name = "mnb-image-analysis"
 requires-python = ">= 3.11"
 version = "0.1.0"
