@@ -1,0 +1,1355 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Block 4: Deep-Learning and Feature Extraction &#8212; Introduction to (Bio-)Image Analysis with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'materials/feature_extraction/feature_extraction';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../book/landing.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.jpeg" class="logo__image only-light" alt="Introduction to (Bio-)Image Analysis with Python - Home"/>
+    <script>document.write(`<img src="../../_static/logo.jpeg" class="logo__image only-dark" alt="Introduction to (Bio-)Image Analysis with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../book/landing.html">
+                    Image Analysis Course
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../book/schedule.html">Topics &amp; Schedule</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../book/setup/computer_setup.html">Computer setup</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../book/setup/install_python.html">Installing Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../book/setup/setup_environment.html">Setting up a Python environment</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../book/image_analysis_intro.html">Introduction to Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../book/notebooks.html">Image processing and analysis with Python</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../image_handling/image_handling.html">If you see this, you are up to date!</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../book/image_processing_book.html">Block 3: Preprocessing &amp; Basic Segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../book/feature_extraction.html">Block 4: Deep-Learning and Feature Extraction</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Info</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../book/feedback.html">Feedback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../book/acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../book/further_reading.html">Further resources</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/materials/feature_extraction/feature_extraction.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Block 4: Deep-Learning and Feature Extraction</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Block 4: Deep-Learning and Feature Extraction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-on-real-world-data">Thresholding On Real-World Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-cellpose-on-nuclei">Running Cellpose on Nuclei</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-cellpose-on-cytoplasm">Running Cellpose on cytoplasm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-cellpose-on-cytoplasm-using-nuclei-as-seeds">Running cellpose on cytoplasm using nuclei as seeds</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">Feature Extraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-dive-biological-explorations">Deep Dive: Biological Explorations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-a-what-is-the-average-size-of-my-nuclei-and-cells">Question A: What is the average size of my nuclei and cells?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-b-is-the-size-of-the-nucleus-relative-to-the-size-of-the-cell">Question B: Is the size of the nucleus relative to the size of the cell?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-c-what-is-the-average-intensity-of-my-nuclei-and-cells">Question C: What is the average intensity of my nuclei and cells?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-d-nuclear-crowding-vs-activity">Question D: Nuclear “Crowding” vs. Activity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-e-signal-localization-is-it-the-same-everywhere">Question E: Signal Localization: Is it the same everywhere?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-f-morphology-vs-signal-does-shape-matter">Question F: Morphology vs. Signal: Does Shape matter?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feedback">FEEDBACK</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="block-4-deep-learning-and-feature-extraction">
+<h1>Block 4: Deep-Learning and Feature Extraction<a class="headerlink" href="#block-4-deep-learning-and-feature-extraction" title="Link to this heading">#</a></h1>
+<p>Now that we have worked through the basic image processing techniques, we will dive into the limitations that can be noticed using those techniques on real world data. We will then take a look at how newer techniques such as machine learning methods can help us where data is a bit trickier to process.</p>
+<p>After using state-of-the-art models, we will look into what features we can extract from our images, and how we can represent them using Python.</p>
+<section id="thresholding-on-real-world-data">
+<h2>Thresholding On Real-World Data<a class="headerlink" href="#thresholding-on-real-world-data" title="Link to this heading">#</a></h2>
+<p>As seen in Block 3, thresholding methods work very well on datasets and images that are evenly lit, and where the contrast between background and foreground is clear. Unfortunately, this is not always the case with real-world microscopy images. We encounter cases where some nuclei are missing signal and where some cells are very faint on a daily basis. Let’s take a look at an example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;KMP_DUPLICATE_LIB_OK&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;TRUE&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">filters</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.measure</span><span class="w"> </span><span class="kn">import</span> <span class="n">regionprops_table</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cellpose</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cellpose.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">imread</span>
+
+<span class="c1"># Set seaborn defaults</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cellpose</span>
+
+<span class="n">cellpose</span><span class="o">.</span><span class="n">version</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;4.0.9&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="s2">&quot;../../data/rab9a-egfp-slice-cropped.tif&quot;</span>
+<span class="c1"># We can use cellpose&#39;s imread function to read the image</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
+
+<span class="c1"># With img.shape, we can check the dims of the image and number of channels</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Image shape: </span><span class="si">{</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># As this is a 3-channel image, we can visualize each channel separately</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 3&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s analyse the nuclei first in Channel 1. As discussed before, we start with a threshold to then make objects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_ch1</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">img_ch2</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># Let&#39;s use Otsu&#39;s method on channel 1</span>
+<span class="n">img_ch1_otsu_t</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">img_ch1</span><span class="p">)</span>
+
+<span class="c1"># Keep only those that are above the threshold</span>
+<span class="n">binary_ch1</span> <span class="o">=</span> <span class="n">img_ch1</span> <span class="o">&gt;</span> <span class="n">img_ch1_otsu_t</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Plotting code</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">binary_ch1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Otsu Thresholding&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, the binary image has some “holes” in the nuclei due to dim or even no signal being captured inside the nucleus. There are multiple ways we could go about fixing this. <strong>Morphological operations</strong> are simple image-processing techniques that change the shape of objects in a binary image by adding or removing pixels based on their neighbors. These operations can help clean up segmentation results by filling holes or removing small artifacts.</p>
+<p>Operations such as closing can fill small gaps inside objects, while opening operations can remove small signals of noise. These methods work only on a binary image and can be used quickly to improve thresholding and binarization results.</p>
+<p>However, these operations rely on intact neighborhoods - if large parts of the object is missing from the threshold, a closing operation cannot fix large missing segmentations.</p>
+<p>An alternative approach is the use of <strong>deep-learning models</strong>. Trained models have the capability to recognize even dim signals, and can take into account shape information, and not just signal strength. Such models can produce much better results in cases such as the one above with holes and semi-recognized objects. In the following, we use <strong>Cellpose</strong>, a deep-learning framework specifically trained to segment nuclei and cells in microscopy.</p>
+<section id="running-cellpose-on-nuclei">
+<h3>Running Cellpose on Nuclei<a class="headerlink" href="#running-cellpose-on-nuclei" title="Link to this heading">#</a></h3>
+<p><a class="reference external" href="https://www.biorxiv.org/content/10.1101/2020.02.02.931238v1">Cellpose</a> is a generalist algorithm for segmenting cells and nuclei. There are 2 main versions of cellpose in use right now: <strong>cellpose-3</strong> and <strong>cellpose-SAM</strong>. The version we will present in the next sections is the older <strong>cellpose-3</strong> versions, where the model needs a diameter parameter in pixels, so that it knows what size of objects it is trying to segment. For this, we will have to use an image processing software like napari to estimate the size. The next cell launches an interactive window in napari, where you can choose 2 points across the nucleus. Then, run the next cell - your line will be measured and automatically fed into the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now running Cellpose on the nuclei with the measured diameter...&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Cellpose</span><span class="p">(</span><span class="n">gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;nuclei&quot;</span><span class="p">)</span>
+<span class="n">masks_c1</span><span class="p">,</span> <span class="n">flows_c1</span><span class="p">,</span> <span class="n">styles_c1</span><span class="p">,</span> <span class="n">diams_c1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span>
+    <span class="n">img_ch1</span><span class="p">,</span> <span class="n">diameter</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We split the visualization here so that we can change visualization options without having to recompute the segmentation</span>
+<span class="c1"># Visualize result</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">label2rgb</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original Image&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1"># plt.imshow(img_ch1, cmap=&quot;gray&quot;)</span>
+<span class="n">labels_rgb_c1</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span>
+    <span class="n">label</span><span class="o">=</span><span class="n">masks_c1</span><span class="p">,</span>
+    <span class="n">image</span><span class="o">=</span><span class="n">img_ch1</span><span class="p">,</span>
+    <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="c1"># Needed to tell the function that 0 is background and should not be colored</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_c1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cellpose Segmentation&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="running-cellpose-on-cytoplasm">
+<h3>Running Cellpose on cytoplasm<a class="headerlink" href="#running-cellpose-on-cytoplasm" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now running Cellpose on the cytoplasm with a fixed diameter...&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Cellpose</span><span class="p">(</span><span class="n">gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;cyto3&quot;</span><span class="p">)</span>
+<span class="n">masks_c2</span><span class="p">,</span> <span class="n">flows_c2</span><span class="p">,</span> <span class="n">styles_c2</span><span class="p">,</span> <span class="n">diams_c2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span>
+    <span class="n">img_ch2</span><span class="p">,</span> <span class="n">diameter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We split the visualization here so that we can change visualization options without having to recompute the segmentation</span>
+<span class="c1"># Visualize result</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">label2rgb</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original Image&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1"># plt.imshow(img_ch1, cmap=&quot;gray&quot;)</span>
+<span class="n">labels_rgb_c2</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span>
+    <span class="n">label</span><span class="o">=</span><span class="n">masks_c2</span><span class="p">,</span>
+    <span class="n">image</span><span class="o">=</span><span class="n">img_ch2</span><span class="p">,</span>
+    <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="c1"># Needed to tell the function that 0 is background and should not be colored</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_c2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cellpose Segmentation&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We split the visualization here so that we can change visualization options without having to recompute the segmentation</span>
+<span class="c1"># Visualize result in a 2x2 grid:</span>
+<span class="c1"># [0,0] img_ch1, [0,1] img_ch1 + masks overlay</span>
+<span class="c1"># [1,0] img_ch2, [1,1] img_ch2 + masks + masks_c2 overlay</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">label2rgb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Top-left: Channel 1 original</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 1&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="c1"># Top-right: Channel 1 with masks overlay</span>
+<span class="n">labels_rgb_ch1</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">masks_c1</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">img_ch1</span><span class="p">,</span> <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_ch1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 1 + masks overlay&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="c1"># Bottom-left: Channel 2 original</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 2&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="c1"># Bottom-right: Channel 2 with masks (from ch1) and masks_c2 overlayed</span>
+<span class="c1"># Create colored mask images for each label image</span>
+<span class="n">labels_rgb_masks</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">masks_c1</span><span class="p">,</span> <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">labels_rgb_masks_c2</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">masks_c2</span><span class="p">,</span> <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_masks</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_masks_c2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 2 + masks (Ch1) + masks_c2 (Ch2)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, the results are much better than the thresholding method. The
+model is able to recognize the nuclei even when they are dim, and it can also
+segment the cytoplasm around them. This is because the model has been trained on
+a large dataset of microscopy images, and it has learned to recognize the
+features of cells and nuclei.</p>
+<p>However, it is important to note that the model is not perfect, and it may still
+miss some cells or segment some cells incorrectly. It is always a good idea to
+visually inspect the results and make sure they are reasonable before proceeding
+with further analysis.</p>
+<p>Looking at the image, we can spot that one cell in the bottom right corner is
+not segmented. This is because the signal in that cell is very dim, and the
+model was not able to recognize it as a cell. This is a common issue with
+deep-learning models, and it highlights the importance of having good quality
+images for analysis.</p>
+<p>In this case, since the nuclei was correctly segmented, we can use the nuclei segmentation as a seed in Cellpose, which will help the model to find the correct cell boundaries even in cases where the signal is dim. This is a common technique used in microscopy image analysis, where the nuclei segmentation is used as a guide for segmenting the cytoplasm.</p>
+</section>
+<section id="running-cellpose-on-cytoplasm-using-nuclei-as-seeds">
+<h3>Running cellpose on cytoplasm using nuclei as seeds<a class="headerlink" href="#running-cellpose-on-cytoplasm-using-nuclei-as-seeds" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read the first line you drew: shape is [[y0, x0], [y1, x1]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now running Cellpose on the cytoplasm with a nuclei channel input as well...&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Cellpose</span><span class="p">(</span><span class="n">gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;cyto3&quot;</span><span class="p">)</span>
+<span class="n">masks_c2c1</span><span class="p">,</span> <span class="n">flows_c2c1</span><span class="p">,</span> <span class="n">styles_c2c1</span><span class="p">,</span> <span class="n">diams_c2c1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span>
+    <span class="n">img</span><span class="p">,</span> <span class="n">diameter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We split the visualization here so that we can change visualization options without having to recompute the segmentation</span>
+<span class="c1"># Visualize result</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">label2rgb</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original Image&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1"># plt.imshow(img_ch1, cmap=&quot;gray&quot;)</span>
+<span class="n">labels_rgb_c2c1</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span>
+    <span class="n">label</span><span class="o">=</span><span class="n">masks_c2c1</span><span class="p">,</span>
+    <span class="n">image</span><span class="o">=</span><span class="n">img_ch2</span><span class="p">,</span>
+    <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="c1"># Needed to tell the function that 0 is background and should not be colored</span>
+<span class="p">)</span>
+<span class="c1"># Use the correct variable name for the guided segmentation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_c2c1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cellpose Segmentation (Guided)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We split the visualization here so that we can change visualization options without having to recompute the segmentation</span>
+<span class="c1"># Visualize result in a 2x2 grid:</span>
+<span class="c1"># [0,0] img_ch1, [0,1] img_ch1 + masks overlay</span>
+<span class="c1"># [1,0] img_ch2, [1,1] img_ch2 + masks + masks_c2 overlay</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">label2rgb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Top-left: Channel 1 original</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 1&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="c1"># Top-right: Channel 1 with masks overlay</span>
+<span class="n">labels_rgb_ch1</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">masks_c1</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">img_ch1</span><span class="p">,</span> <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_ch1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 1 + masks overlay&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="c1"># Bottom-left: Channel 2 original</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 2&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="c1"># Bottom-right: Channel 2 with masks (from ch1) and masks_c2 overlayed</span>
+<span class="c1"># Create colored mask images for each label image</span>
+<span class="n">labels_rgb_masks</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">masks_c1</span><span class="p">,</span> <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">labels_rgb_masks_c2c1</span> <span class="o">=</span> <span class="n">label2rgb</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">masks_c2c1</span><span class="p">,</span> <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_ch2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_masks</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labels_rgb_masks_c2c1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Channel 2 + masks (Ch1) + guided masks_c2 (Ch2)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="feature-extraction">
+<h2>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Link to this heading">#</a></h2>
+<p>Once we have segmented our objects, we can extract features from them.
+As the result from Cellpose is a label image (an image where each object has a
+unique label), we can use this image to extract various features for each
+segmented object. Common features include:</p>
+<ul class="simple">
+<li><p><strong>Area</strong>: The number of pixels that belong to the object.</p></li>
+<li><p><strong>Perimeter</strong>: The length of the boundary of the object.</p></li>
+<li><p><strong>Centroid</strong>: The center of mass of the object.</p></li>
+<li><p><strong>Mean Intensity</strong>: The average intensity of the pixels that belong to the object.</p></li>
+<li><p><strong>Ferret Diameter</strong>: The diameter of a circle with the same area as the object.</p></li>
+</ul>
+<p>This can be done using the <code class="docutils literal notranslate"><span class="pre">regionprops_table</span></code> function from <code class="docutils literal notranslate"><span class="pre">skimage.measure</span></code>. This function takes the raw image and a labeled image and returns a list of properties for each object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">props_nuclei</span> <span class="o">=</span> <span class="n">regionprops_table</span><span class="p">(</span>
+    <span class="n">label_image</span><span class="o">=</span><span class="n">masks_c1</span><span class="p">,</span>
+    <span class="n">intensity_image</span><span class="o">=</span><span class="n">img_ch1</span><span class="p">,</span>
+    <span class="n">properties</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;area&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;perimeter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;centroid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;intensity_mean&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;feret_diameter_max&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="c1"># Convert to DataFrame, rename intensity column to indicate channel, and round</span>
+<span class="n">df_props_nuclei</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">props_nuclei</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;intensity_mean&quot;</span><span class="p">:</span> <span class="s2">&quot;intensity_mean_ch1&quot;</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_props_nuclei</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">props_cells</span> <span class="o">=</span> <span class="n">regionprops_table</span><span class="p">(</span>
+    <span class="n">label_image</span><span class="o">=</span><span class="n">masks_c2c1</span><span class="p">,</span>
+    <span class="n">intensity_image</span><span class="o">=</span><span class="n">img_ch2</span><span class="p">,</span>
+    <span class="n">properties</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;area&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;perimeter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;centroid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;intensity_mean&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;feret_diameter_max&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="c1"># Convert to DataFrame, rename intensity column to indicate channel, and round</span>
+<span class="n">df_props_c2</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">props_cells</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;intensity_mean&quot;</span><span class="p">:</span> <span class="s2">&quot;intensity_mean_ch2&quot;</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_props_c2</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, the DataFrame contains the extracted features for each nucleus. We can do the same for the cells segmented in Channel 2. We can also match the nuclei and cells together to see which nucleus belongs to which cell, and extract features from both together.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Match nuclei to cells and extract combined features</span>
+<span class="c1"># Goal: Create a unified dataset where each cell record includes both cell and nucleus properties</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.measure</span><span class="w"> </span><span class="kn">import</span> <span class="n">regionprops</span>
+
+<span class="c1"># Extract mean intensities for nuclei and cells across both channels</span>
+<span class="c1"># This allows us to compare signal levels in different compartments</span>
+<span class="n">nuc_props_ch1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">intensity_mean</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">masks_c1</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">}</span>
+<span class="n">nuc_props_ch2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">intensity_mean</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">masks_c1</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="p">}</span>
+<span class="n">cell_props_ch1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">intensity_mean</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">masks_c2c1</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">}</span>
+<span class="n">cell_props_ch2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">intensity_mean</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">masks_c2c1</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="p">}</span>
+
+<span class="c1"># Build a lookup dictionary for nucleus properties by label</span>
+<span class="c1"># This makes it fast to retrieve nucleus data when processing cells</span>
+<span class="n">nuc_lookup</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">masks_c1</span><span class="p">):</span>
+    <span class="n">nuc_lookup</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;nuclei_label&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">),</span>
+        <span class="s2">&quot;nuclei_area&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">area</span><span class="p">),</span>
+        <span class="s2">&quot;nuclei_centroid_row&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">centroid</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="s2">&quot;nuclei_centroid_col&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">centroid</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="s2">&quot;nuclei_intensity_mean_ch1&quot;</span><span class="p">:</span> <span class="n">nuc_props_ch1</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+        <span class="s2">&quot;nuclei_intensity_mean_ch2&quot;</span><span class="p">:</span> <span class="n">nuc_props_ch2</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+    <span class="p">}</span>
+
+<span class="c1"># For each cell, find the overlapping nucleus with maximum pixel count</span>
+<span class="c1"># The assumption: the nucleus that overlaps most with a cell belongs to that cell</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">masks_c2c1</span><span class="p">):</span>
+    <span class="n">cell_label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+
+    <span class="c1"># Find which nucleus labels overlap with this cell&#39;s pixels</span>
+    <span class="n">overlap</span> <span class="o">=</span> <span class="n">masks_c1</span><span class="p">[</span><span class="n">masks_c2c1</span> <span class="o">==</span> <span class="n">cell_label</span><span class="p">]</span>
+    <span class="n">labels</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">overlap</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Identify the nucleus with the highest pixel overlap (best match)</span>
+    <span class="n">matched_n</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Default: no nucleus found</span>
+    <span class="k">if</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">nz</span> <span class="o">=</span> <span class="n">labels</span> <span class="o">!=</span> <span class="mi">0</span>  <span class="c1"># Exclude background (label 0)</span>
+        <span class="k">if</span> <span class="n">nz</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">matched_n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">nz</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">nz</span><span class="p">])])</span>
+
+    <span class="c1"># Collect cell properties</span>
+    <span class="n">cell_row</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;cell_label&quot;</span><span class="p">:</span> <span class="n">cell_label</span><span class="p">,</span>
+        <span class="s2">&quot;cell_area&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">area</span><span class="p">),</span>
+        <span class="s2">&quot;cell_centroid_row&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">centroid</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="s2">&quot;cell_centroid_col&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">centroid</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="s2">&quot;cell_perimeter&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;perimeter&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="s2">&quot;cell_intensity_mean_ch1&quot;</span><span class="p">:</span> <span class="n">cell_props_ch1</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cell_label</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+        <span class="s2">&quot;cell_intensity_mean_ch2&quot;</span><span class="p">:</span> <span class="n">cell_props_ch2</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cell_label</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+        <span class="s2">&quot;cell_feret_diameter_max&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;feret_diameter_max&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="s2">&quot;matched_nucleus_label&quot;</span><span class="p">:</span> <span class="n">matched_n</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Merge nucleus data if a match was found</span>
+    <span class="c1"># This creates a single row with both cell and nucleus information</span>
+    <span class="k">if</span> <span class="n">matched_n</span> <span class="ow">and</span> <span class="n">matched_n</span> <span class="ow">in</span> <span class="n">nuc_lookup</span><span class="p">:</span>
+        <span class="n">cell_row</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">nuc_lookup</span><span class="p">[</span><span class="n">matched_n</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If no nucleus, fill nucleus columns with NaN</span>
+        <span class="n">cell_row</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;nuclei_label&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                <span class="s2">&quot;nuclei_area&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                <span class="s2">&quot;nuclei_centroid_row&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                <span class="s2">&quot;nuclei_centroid_col&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                <span class="s2">&quot;nuclei_intensity_mean_ch1&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                <span class="s2">&quot;nuclei_intensity_mean_ch2&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cell_row</span><span class="p">)</span>
+
+<span class="c1"># Convert results to a DataFrame for easy analysis and visualization</span>
+<span class="n">df_matched</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_matched</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="deep-dive-biological-explorations">
+<h2>Deep Dive: Biological Explorations<a class="headerlink" href="#deep-dive-biological-explorations" title="Link to this heading">#</a></h2>
+<p>Once we have managed to get this far, we can move beyond simple measurement and start testing biological hypotheses using our extracted features in <code class="docutils literal notranslate"><span class="pre">df_matched</span></code>. The possibilities are endless, and it really depends on your specific question and what you are trying to understand from your data.</p>
+<p>In the following sections, we will explore several “cool” questions you can ask your data.</p>
+<section id="question-a-what-is-the-average-size-of-my-nuclei-and-cells">
+<h3>Question A: What is the average size of my nuclei and cells?<a class="headerlink" href="#question-a-what-is-the-average-size-of-my-nuclei-and-cells" title="Link to this heading">#</a></h3>
+<p>Are they different? Are they different between conditions?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">skimage.measure</span><span class="w"> </span><span class="kn">import</span> <span class="n">regionprops</span>
+
+<span class="c1"># Choose available labels</span>
+<span class="n">nuc_labels</span> <span class="o">=</span> <span class="n">masks_c1</span>
+<span class="n">cell_labels</span> <span class="o">=</span> <span class="n">masks_c2c1</span>
+
+<span class="c1"># Collect areas</span>
+<span class="n">nuc_areas</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">area</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">nuc_labels</span><span class="p">)]</span>
+<span class="n">cell_areas</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">area</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">cell_labels</span><span class="p">)]</span>
+
+<span class="c1"># Create a DataFrame for Seaborn</span>
+<span class="n">df_areas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;Area&quot;</span><span class="p">:</span> <span class="n">nuc_areas</span> <span class="o">+</span> <span class="n">cell_areas</span><span class="p">,</span>
+        <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Nucleus&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">nuc_areas</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Cell&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell_areas</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Plotting code with Seaborn</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_areas</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Area&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">,</span>
+    <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;steelblue&quot;</span><span class="p">,</span> <span class="s2">&quot;seagreen&quot;</span><span class="p">],</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of Nuclei and Cell Areas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Area (Pixels)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nuclei: n=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">nuc_areas</span><span class="p">)</span><span class="si">}</span><span class="s2">, mean area=</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">nuc_areas</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">nuc_areas</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> px&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Cells:  n=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cell_areas</span><span class="p">)</span><span class="si">}</span><span class="s2">, mean area=</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">cell_areas</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">cell_areas</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> px&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Answer A:</strong>
+The nuclei and cells show distinct area distributions. Nuclei appear to have a more constrained size range, while cell areas exhibit greater variability. This likely reflects the biological reality where nuclear size is tightly regulated, whereas cytoplasmic volume can vary significantly depending on growth conditions or cell state.</p>
+</section>
+<section id="question-b-is-the-size-of-the-nucleus-relative-to-the-size-of-the-cell">
+<h3>Question B: Is the size of the nucleus relative to the size of the cell?<a class="headerlink" href="#question-b-is-the-size-of-the-nucleus-relative-to-the-size-of-the-cell" title="Link to this heading">#</a></h3>
+<p>We can investigate the ratio of nuclear to cytoplasmic area to see if there is a consistent relationship.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use df_matched to compute cell/nuclei and cyto/nuclei area ratios</span>
+<span class="c1"># Cytoplasm = Cell - Nucleus</span>
+<span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cytoplasm_area&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cell_area&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;nuclei_area&quot;</span><span class="p">]</span>
+
+<span class="c1"># Cell to Nuclei ratio</span>
+<span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cell_nuc_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cell_area&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;nuclei_area&quot;</span><span class="p">]</span>
+<span class="c1"># Cytoplasm to Nuclei ratio</span>
+<span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cyto_nuc_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cytoplasm_area&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;nuclei_area&quot;</span><span class="p">]</span>
+
+<span class="c1"># Filter for valid entries (where nuclei exist and ratios are finite)</span>
+<span class="n">valid_data</span> <span class="o">=</span> <span class="n">df_matched</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cell_nuc_ratio&quot;</span><span class="p">,</span> <span class="s2">&quot;cyto_nuc_ratio&quot;</span><span class="p">])</span>
+<span class="n">valid_data</span> <span class="o">=</span> <span class="n">valid_data</span><span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">valid_data</span><span class="p">[</span><span class="s2">&quot;cell_nuc_ratio&quot;</span><span class="p">])</span>
+    <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">valid_data</span><span class="p">[</span><span class="s2">&quot;cyto_nuc_ratio&quot;</span><span class="p">])</span>
+<span class="p">]</span>
+
+<span class="c1"># Prepare data for plotting</span>
+<span class="n">df_ratios_melted</span> <span class="o">=</span> <span class="n">valid_data</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span>
+    <span class="n">value_vars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cell_nuc_ratio&quot;</span><span class="p">,</span> <span class="s2">&quot;cyto_nuc_ratio&quot;</span><span class="p">],</span>
+    <span class="n">var_name</span><span class="o">=</span><span class="s2">&quot;Ratio Type&quot;</span><span class="p">,</span>
+    <span class="n">value_name</span><span class="o">=</span><span class="s2">&quot;Ratio&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Visualize the distribution with Seaborn</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_ratios_melted</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Ratio&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Ratio Type&quot;</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;orchid&quot;</span><span class="p">,</span> <span class="s2">&quot;seagreen&quot;</span><span class="p">],</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Calculate medians for visualization</span>
+<span class="n">cell_med</span> <span class="o">=</span> <span class="n">valid_data</span><span class="p">[</span><span class="s2">&quot;cell_nuc_ratio&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="n">cyto_med</span> <span class="o">=</span> <span class="n">valid_data</span><span class="p">[</span><span class="s2">&quot;cyto_nuc_ratio&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+
+<span class="c1"># Add median lines</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+    <span class="n">cell_med</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;darkorchid&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Median Cell/Nuc: </span><span class="si">{</span><span class="n">cell_med</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+    <span class="n">cyto_med</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;darkgreen&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Median Cyto/Nuc: </span><span class="si">{</span><span class="n">cyto_med</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Area Ratios Distribution (Relative to Nucleus)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Ratio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median Cell/Nuclei ratio: </span><span class="si">{</span><span class="n">cell_med</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median Cyto/Nuclei ratio: </span><span class="si">{</span><span class="n">cyto_med</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sorting by cell area and plotting ratios</span>
+<span class="n">sorted_data</span> <span class="o">=</span> <span class="n">valid_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;cell_area&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Visualize with Seaborn and add a regression line to see how the ratio changes</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plotting with scatter and a smooth line or linear trend to show scaling</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">sorted_data</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;cell_area&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;cell_nuc_ratio&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">},</span>
+    <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;darkorchid&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Cell/Nuc Trend&quot;</span><span class="p">},</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cell / Nuclei&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;darkorchid&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">sorted_data</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;cell_area&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;cyto_nuc_ratio&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">},</span>
+    <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;darkgreen&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Cyto/Nuc Trend&quot;</span><span class="p">},</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cyto / Nuclei&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;seagreen&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Area Ratios vs Cell Size (Checking for Karyoplasmic Scaling)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Cell Area (Pixels)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Ratio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Answer B:</strong>
+By sorting cells by size, we can see if the ratio remains constant. If the ratio is stable, it implies “karyoplasmic scaling”—where the nucleus grows in proportion to the cell. Deviations in the ratio for very large or small cells might indicate specific biological phases, such as preparation for division.</p>
+</section>
+<section id="question-c-what-is-the-average-intensity-of-my-nuclei-and-cells">
+<h3>Question C: What is the average intensity of my nuclei and cells?<a class="headerlink" href="#question-c-what-is-the-average-intensity-of-my-nuclei-and-cells" title="Link to this heading">#</a></h3>
+<p>Are they different? Are they different between conditions?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">skimage.measure</span><span class="w"> </span><span class="kn">import</span> <span class="n">regionprops</span>
+
+<span class="c1"># Choose available labels</span>
+<span class="n">nuc_labels</span> <span class="o">=</span> <span class="n">masks_c1</span>
+<span class="n">cell_labels</span> <span class="o">=</span> <span class="n">masks_c2c1</span>
+
+<span class="c1"># Collect mean intensities</span>
+<span class="n">nuc_means</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">intensity_mean</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">nuc_labels</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">img_ch1</span><span class="p">)]</span>
+<span class="n">cell_means</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">intensity_mean</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">cell_labels</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">img_ch2</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Combine intensities for Seaborn</span>
+<span class="n">df_intensities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;Intensity&quot;</span><span class="p">:</span> <span class="n">nuc_means</span> <span class="o">+</span> <span class="n">cell_means</span><span class="p">,</span>
+        <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Nucleus (Ch1)&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">nuc_means</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Cell (Ch2)&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell_means</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Visualize using Seaborn</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_intensities</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Intensity&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">,</span>
+    <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;steelblue&quot;</span><span class="p">,</span> <span class="s2">&quot;seagreen&quot;</span><span class="p">],</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of Mean Intensities&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean Intensity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nuclei: n=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">nuc_means</span><span class="p">)</span><span class="si">}</span><span class="s2">, mean=</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">nuc_means</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">nuc_means</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cells:  n=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cell_means</span><span class="p">)</span><span class="si">}</span><span class="s2">, mean=</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">cell_means</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">cell_means</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Answer C:</strong>
+Mean intensity distributions reveal the concentration of signal in each compartment. A narrower peak suggests uniform protein expression across the population, while a broad or multi-modal distribution could indicate sub-populations of cells with different expression levels or metabolic states.</p>
+</section>
+<section id="question-d-nuclear-crowding-vs-activity">
+<h3>Question D: Nuclear “Crowding” vs. Activity<a class="headerlink" href="#question-d-nuclear-crowding-vs-activity" title="Link to this heading">#</a></h3>
+<p><strong>Question:</strong> In cells where the nucleus is very large relative to the cytoplasm (High Nuc/Cell ratio), is the metabolic activity (simulated here by Channel 3 intensity) higher or lower?
+<em>This could indicate cell-cycle stages or stress responses.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">skimage.measure</span><span class="w"> </span><span class="kn">import</span> <span class="n">regionprops</span>
+
+<span class="c1"># Prepare additional features in df_matched</span>
+<span class="n">ch3_props</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">intensity_mean</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">masks_c2c1</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="p">}</span>
+<span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cell_intensity_mean_ch3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cell_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">ch3_props</span><span class="p">)</span>
+<span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;nuc_cell_area_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;nuclei_area&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cell_area&quot;</span><span class="p">]</span>
+
+<span class="c1"># --- Plot: Nuclear &quot;Crowding&quot; vs. Activity ---</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Visualize with joint distribution for more insights</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_matched</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;nuc_cell_area_ratio&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;cell_intensity_mean_ch3&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">},</span>
+    <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;indigo&quot;</span><span class="p">},</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;mediumpurple&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cells&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Correlation between Nuclear Crowding and Signal Activity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Nucleus / Cell Area Ratio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Ch3 Mean Intensity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Correlation coefficient: </span><span class="si">{</span><span class="n">df_matched</span><span class="p">[[</span><span class="s1">&#39;nuc_cell_area_ratio&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;cell_intensity_mean_ch3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Answer D:</strong>
+If the trendline is flat or the correlation is low (near 0), it suggests that the concentration of the protein in Channel 3 is independent of how “crowded” the cell is by its nucleus. If the correlation is high, it might suggest that smaller, more compact cells (higher ratio) have higher metabolic concentrations.</p>
+</section>
+<section id="question-e-signal-localization-is-it-the-same-everywhere">
+<h3>Question E: Signal Localization: Is it the same everywhere?<a class="headerlink" href="#question-e-signal-localization-is-it-the-same-everywhere" title="Link to this heading">#</a></h3>
+<p><strong>Question:</strong> Does the intensity of Channel 2 (Cytoplasm) correlate perfectly with Channel 1 (Nuclei)?
+<em>Strong correlation suggests a leaked or non-specific signal, while low correlation suggests distinct functional compartments.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Plot: Signal Localization Correlation (Ch1 vs Ch2) ---</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Visualize with joint distribution for more insights</span>
+<span class="c1"># Use Nuclei Intensity Ch1 vs Cell Intensity Ch2 to compare compartmental biology</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_matched</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;nuclei_intensity_mean_ch1&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;cell_intensity_mean_ch2&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">},</span>
+    <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;darkgreen&quot;</span><span class="p">},</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cells&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Spatial Leakage Check: Compartment Correlation (Nuclei Ch1 vs Cell Ch2)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Nuclei Intensity Ch1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cell Intensity Ch2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Correlation coefficient: </span><span class="si">{</span><span class="n">df_matched</span><span class="p">[[</span><span class="s1">&#39;nuclei_intensity_mean_ch1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;cell_intensity_mean_ch2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Answer E:</strong>
+A high correlation (e.g., &gt; 0.8) often indicates that the signal is “leaking” or that the segmentation boundaries are not perfectly separating the compartments. A low correlation suggests that the biology in the nucleus (Ch1) is spatially and functionally distinct from the biology in the cytoplasm (Ch2).</p>
+</section>
+<section id="question-f-morphology-vs-signal-does-shape-matter">
+<h3>Question F: Morphology vs. Signal: Does Shape matter?<a class="headerlink" href="#question-f-morphology-vs-signal-does-shape-matter" title="Link to this heading">#</a></h3>
+<p><strong>Question:</strong> Do elongated cells have different Channel 2 levels than round cells?
+<em>We can calculate ‘Roundness’ to see if cell stretching affects expression.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Plot: Morphology (Roundness) vs. Signal ---</span>
+<span class="c1"># Ensure Roundness is correctly calculated</span>
+<span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;roundness&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cell_area&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+    <span class="n">df_matched</span><span class="p">[</span><span class="s2">&quot;cell_perimeter&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Visualize Roundness vs Signal Intensity</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_matched</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;roundness&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;cell_intensity_mean_ch2&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">},</span>
+    <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;darkred&quot;</span><span class="p">},</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;salmon&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cells&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Effect of Cell Morphology (Roundness) on Cytoplasm Signal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Roundness (1.0 = perfect circle)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cell Intensity Ch2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Correlation coefficient: </span><span class="si">{</span><span class="n">df_matched</span><span class="p">[[</span><span class="s1">&#39;roundness&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;cell_intensity_mean_ch2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Answer F:</strong>
+Roundness measures how circular a cell is. If rounder cells (closer to 1.0) show higher intensities, it might indicate that cells in suspension or mitotic cells (which ball up) have different expression levels than spread-out, elongated cells.</p>
+<p>The correlation coefficient quantifies this relationship: a positive correlation implies rounder cells express more signal, while a near-zero correlation suggests that cell shape does not significantly affect the measured channel’s expression level. Negative correlations would imply that large spreading structures or highly polarized shapes exhibit stronger intensity.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="feedback">
+<h1>FEEDBACK<a class="headerlink" href="#feedback" title="Link to this heading">#</a></h1>
+<p>Thanks everyone for following this course !</p>
+<p>It would be nice if you could fill out this survey so we can improve the course
+for future iterations:</p>
+<a class="reference internal image-reference" href="../../_images/qr_code_feedbackform.svg"><img alt="../../_images/qr_code_feedbackform.svg" src="../../_images/qr_code_feedbackform.svg" style="width: 20%;" />
+</a>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./materials/feature_extraction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Block 4: Deep-Learning and Feature Extraction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-on-real-world-data">Thresholding On Real-World Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-cellpose-on-nuclei">Running Cellpose on Nuclei</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-cellpose-on-cytoplasm">Running Cellpose on cytoplasm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-cellpose-on-cytoplasm-using-nuclei-as-seeds">Running cellpose on cytoplasm using nuclei as seeds</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">Feature Extraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-dive-biological-explorations">Deep Dive: Biological Explorations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-a-what-is-the-average-size-of-my-nuclei-and-cells">Question A: What is the average size of my nuclei and cells?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-b-is-the-size-of-the-nucleus-relative-to-the-size-of-the-cell">Question B: Is the size of the nucleus relative to the size of the cell?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-c-what-is-the-average-intensity-of-my-nuclei-and-cells">Question C: What is the average intensity of my nuclei and cells?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-d-nuclear-crowding-vs-activity">Question D: Nuclear “Crowding” vs. Activity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-e-signal-localization-is-it-the-same-everywhere">Question E: Signal Localization: Is it the same everywhere?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-f-morphology-vs-signal-does-shape-matter">Question F: Morphology vs. Signal: Does Shape matter?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feedback">FEEDBACK</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microscopy Network Basel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026 Microscopy Network Basel.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
