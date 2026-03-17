@@ -6,10 +6,11 @@ authors = [
     { name = "Rao Rohan Girish", email = "r.rohangirish@unibas.ch" },
     { name = "Loïc Sauteur", email = "loic.sauteur@unibas.ch" },
 ]
-dependencies = ["cellpose<4"]
+#dependencies = ["cellpose<4"]
 name = "mnb-image-analysis"
 requires-python = ">= 3.11"
 version = "0.1.0"
+dependencies = ["cellpose>=3.0.9,<4"]
 
 [build-system]
 build-backend = "hatchling.build"
@@ -57,6 +58,7 @@ napari = ">=0.6.6,<0.7"
 pooch = ">=1.9.0,<2"
 seaborn = ">=0.13.2,<0.14"
 bioio-tifffile = ">=1.3.0,<2"
+pytorch-cpu = ">=2.10.0,<3"
 # unzip = "*" # not available on Windows...
 
 [tool.pixi.feature.test.dependencies]
